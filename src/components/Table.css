@@ -42,13 +42,13 @@
   padding: 0.3rem;
   color: white;
 }
-.label-draft {
+.label-restock {
   background-color: #777;
 }
-.label-live {
+.label-ready-stock {
   background-color: #42a942;
 }
-.label-error {
+.label-out-of-stock {
   background-color: #d9534f;
 }
 .actions {

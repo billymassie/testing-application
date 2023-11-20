@@ -7,9 +7,25 @@ function App() {
   const [modaOpen, setModalOpen] = useState(false);
   const [rows, setRows] = useState([]);
 
+  const [rowToEdit, setRowToEdit] = useState(null);
+
+  const handleEditRow = (idx) => {
+    setRowToEdit(idx);
+    setModalOpen(true);
+  };
+
   const handleSubmit = (newRow) => {
-    const newRows = [...rows, newRow];
-    setData(newRows);
+    if (rowToEdit === null) {
+      const newRows = [...rows, newRow];
+      setData(newRows);
+    } else {
+      setData(
+        rows.map((currRow, idx) => {
+          if (idx !== rowToEdit) return currRow;
+          return newRow;
+        })
+      );
+    }
   };
 
   const handleDeleteRow = (targetIndex) => {
@@ -24,12 +40,12 @@ function App() {
 
   useEffect(() => {
     const data = localStorage.getItem('STOCK_ITEM');
-    setRows(JSON.parse(data));
+    if (data !== null) setRows(JSON.parse(data));
   }, []);
 
   return (
     <div className='App'>
-      <Table rows={rows} deleteRow={handleDeleteRow} />
+      <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
       <button className='btn' onClick={() => setModalOpen(true)}>
         Add Item
       </button>
@@ -37,8 +53,10 @@ function App() {
         <Modal
           closeModal={() => {
             setModalOpen(false);
+            setRowToEdit(null);
           }}
           onSubmit={handleSubmit}
+          defaultValue={rowToEdit !== null && rows[rowToEdit]}
         />
       )}
     </div>

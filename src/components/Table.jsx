@@ -2,20 +2,20 @@ import React from 'react';
 import { BsFillTrashFill, BsFillPencilFill } from 'react-icons/bs';
 import './Table.css';
 
-export const Table = ({ rows, deleteRow }) => {
+export const Table = ({ rows, deleteRow, editRow }) => {
   return (
     <div className='table-wrapper'>
       <table className='table'>
         <thead>
           <tr>
-            <th>Page</th>
+            <th>Product Name</th>
             <th className='expand'>Description</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, idx) => {
+          {rows?.map((row, idx) => {
             return (
               <tr key={idx}>
                 <td>{row.page}</td>
@@ -31,7 +31,7 @@ export const Table = ({ rows, deleteRow }) => {
                       className='delete-btn'
                       onClick={() => deleteRow(idx)}
                     />
-                    <BsFillPencilFill />
+                    <BsFillPencilFill onClick={() => editRow(idx)} />
                   </span>
                 </td>
               </tr>
